@@ -1,23 +1,32 @@
 #!/usr/bin/env python3
 
+"""
+Title: ActionPop2Poll
+Author: Daguhh
+Date: 2025-11-11
+Version: unreleased
+Description: Create telegram poll from action populaire agenda
+Usage: python actionpop2poll.py [config_path.json]
+Dependencies: requests, tkinter
+License: The Unlicense
+Repository: https://github.com/jitroyes/bot_poll_jit
+"""
+
 import sys
 import re
 from datetime import datetime
 import locale
 import json
 
-import requests
 import tkinter as tk
+import requests
 
 
-"""
-https://core.telegram.org/bots/tutorial#obtain-your-bot-token
-"""
-
+#https://core.telegram.org/bots/tutorial#obtain-your-bot-token
 def create_config():
     config = {
         "TOKEN": "xxxxxxxxxxxxxxx",
-        "CHAT": -00000000,
+        "CHAT": -100000000,
         "TOPIC": None
     }
     with open('credentials.json', 'w') as fp:
@@ -259,15 +268,24 @@ class AskConfigPopup(tk.Tk):
         create_config()
         self.destroy()
 
-if __name__ == "__main__":
+def get_config():
+
+    if len(sys.argv) == 2:
+        config_path = sys.argv[1]
+    else:
+        config_path = "credentials.json"
 
     try:
-        with open("credentials.json", "r") as fp:
-            CREDENTIALS = json.load(fp)
+        with open(config_path, "r") as fp:
+            return json.load(fp)
     except FileNotFoundError:
         popup = AskConfigPopup()
         popup.mainloop()
-        exit(0)
+        sys.exit(0)
+
+if __name__ == "__main__":
+
+    CREDENTIALS = get_config()
 
     gui = Gui()
     gui.mainloop()
