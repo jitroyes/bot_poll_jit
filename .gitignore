@@ -1,4 +1,14 @@
 
 
-__pycache__/
+# conf file
+credentials.json
+
+# env
 .venv
+__pycache__/
+*.pyc
+
+# pyinstaller files
+build/
+dist/
+actionpop2poll.spec
